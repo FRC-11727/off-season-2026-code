@@ -14,7 +14,7 @@ public class intake extends SubsystemBase {
     public final Neos550 intakeMotor = new Neos550(13);
     public final DigitalInput ballSensor = new DigitalSensor(0);
 
-    public void intakeSpeed(single speed) {
+    public void intakeSpeed(double speed) {
         intakeMotor.set(speed);
     }
 
@@ -23,7 +23,7 @@ public class intake extends SubsystemBase {
     }
 
     public boolean hasBall() {
-        return !ballSensor.get()
+        return ballSensor.get()
     } 
   }
   /**
