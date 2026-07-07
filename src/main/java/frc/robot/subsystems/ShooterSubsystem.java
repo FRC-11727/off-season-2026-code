@@ -4,51 +4,51 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class intake extends SubsystemBase {
+public class ShooterSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
-  public IntakeSubsystem() {
-    public final Neos550 intakeMotor = new Neos550(13);
-    public final DigitalInput ballSensor = new DigitalSensor(0);
+  private static final double SHOOT_SPEED = 1.0;
+  private static final double IDLE_SPEED = 0.0;
+  private final SparkMax shooterMotor;
+  public ShooterSubsystem() {
+    shooterMotor = new SparkMax(20, MotorType.kBrushless);
+    
 
-    public void intakeSpeed(double speed) {
-        intakeMotor.set(speed);
-    }
 
-    public void stopIntake() {
-        intakeMotor.set(0);
-    }
+  }
+  public void setShooterSpeed(double speed) {
+    shooterMotor.set(speed);
+  }
+  public void stopShooterSpeed(){
+    setShooterSpeed(IDLE_SPEED);
+  }
 
-    public boolean hasBall() {
-        return ballSensor.get()
-    } 
+  public boolean isAtSpeed() {
+    return shooterMotor.get() >= SHOOT_SPEED -0.05;
   }
   /**
    * Example command factory method.
-   
+   *
    * @return a command
    */
-  public Command IntakeMethodCommand() {
+  public Command shooterMethodCommand() {
     // Inline construction of command goes here.
     // Subsystem::RunOnce implicitly requires `this` subsystem.
     return Commands.startEnd(
-        () -> intakeSpeed(0.8)
-        () -> stopIntake(0)
-        );
-    
- }
+      () -> setShooterSpeed(SHOOT_SPEED),
+      () -> stopShooterSpeed()
 
- public Command intakeUntilBall() {
-    return Commands.run(
-        () -> setIntakeSpeed(0.8)
+    );
 
-    )
-    .until(::hasBall)
-    .finallyDo(interrupter -> stopIntake());
- }
+        
+  }
 
   /**
    * An example method querying a boolean state of the subsystem (for example, a digital sensor).
@@ -63,8 +63,8 @@ public class intake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("Has Ball", hasBall());
-    SmartDashboard.putNumber("Intake Speed", intakeMotor.get());
+    SmartDashboard.putBoolean("Shooter at Speed", isAtSpeed());
+    SmartDashboard.putNumber("Shooter Speed", shooterMotor.get());
   }
 
   @Override
