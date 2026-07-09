@@ -5,7 +5,6 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkMax;
@@ -19,16 +18,17 @@ public class DriveBaseSubsystem extends SubsystemBase {
   private SparkMax motortopright = null;
   private SparkMax motorbottomleft = null;
   private SparkMax motorbottomright = null;
-  private final DifferentialDrive drive;
+  private DifferentialDrive drive;
   /** Creates a new ExampleSubsystem. */
   public DriveBaseSubsystem(DifferentialDrive drive) {
+    this.drive = null;
     motortopleft = new SparkMax(20, MotorType.kBrushless);
     motortopright = new SparkMax(21, MotorType.kBrushless);
     motorbottomleft = new SparkMax(178, MotorType.kBrushless);
     motorbottomright = new SparkMax(56, MotorType.kBrushless);
 
 
-    this.drive = drive;
+    
   }
 
   public DriveBaseSubsystem(){
@@ -53,25 +53,36 @@ public class DriveBaseSubsystem extends SubsystemBase {
    
     
     
-    SparkBaseConfig config;
-    motorbottomleft.configure(config, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters);
-    motortopleft.configure(config, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters);
-    motorbottomright.configure(config, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters);
-    motortopright.configure(config, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters);
 
+    motorbottomleft.configure(motorbottomleftconfig, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters);
+    motortopleft.configure(motortopleftconfig, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters);
+    motorbottomright.configure(motorbottomrightconfig, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters);
+    motortopright.configure(motortoprightconfig, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters);
 
+    drive = new DifferentialDrive(motortopleft::set, motortopright::set);
+
+    
   }
 
+
+  public void arcade( double speed, double rotation) {
+    drive. arcadeDrive(speed, rotation);
+  }
+
+  public void stop() {
+    drive.stopMotor();
+  }
   /**
    * Example command factory method.
    *
    * @return a command
    */
-  public Command DriveBaseMethodCommand() {
+  public Command DriveBaseMethodCommand(DoubleSupplier speed, DoubleSupplier rotation) {
     // Inline construction of command goes here.
     // Subsystem::RunOnce implicitly requires `this` subsystem.
-    return runOnce(
-        () -> {
+    return Commands
+        () -> arcadeDrive(speed.getAsDouble()),
+        () -> arcadeDrive(rotation.getAsDouble())
           /* one-time action goes here */
         });
   }
