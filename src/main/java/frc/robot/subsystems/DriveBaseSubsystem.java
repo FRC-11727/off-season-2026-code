@@ -10,6 +10,7 @@ import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkMax;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -66,7 +67,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 
 
   public void arcade( double speed, double rotation) {
-    drive. arcadeDrive(speed, rotation);
+    drive.arcadeDrive(speed, rotation);
   }
 
   public void stop() {
@@ -77,15 +78,16 @@ public class DriveBaseSubsystem extends SubsystemBase {
    *
    * @return a command
    */
-  public Command DriveBaseMethodCommand(DoubleSupplier speed, DoubleSupplier rotation) {
+
+ // public Command DriveBaseMethodCommand(DoubleSupplier speed, DoubleSupplier rotation) {
     // Inline construction of command goes here.
     // Subsystem::RunOnce implicitly requires `this` subsystem.
-    return Commands
-        () -> arcadeDrive(speed.getAsDouble()),
-        () -> arcadeDrive(rotation.getAsDouble())
+    //return Command
+    //    () -> arcadeDrive(speed.getAsDouble()),
+     //   () -> arcadeDrive(rotation.getAsDouble())
           /* one-time action goes here */
-        });
-  }
+   // );
+ // }
 
   /**
    * An example method querying a boolean state of the subsystem (for example, a digital sensor).
@@ -100,6 +102,8 @@ public class DriveBaseSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Left Speed", motortopleft.get());
+    SmartDashboard.putNumber("Right Speed", motortopright.get());
   }
 
   @Override
