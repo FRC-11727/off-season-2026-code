@@ -5,10 +5,19 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+<<<<<<< Updated upstream
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+=======
+import frc.robot.subsystems.DriveBaseSubsystem;
+//import frc.robot.commands.Autos;
+//import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+//import edu.wpi.first.wpilibj2.command.Command;
+>>>>>>> Stashed changes
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -21,6 +30,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+<<<<<<< Updated upstream
+=======
+  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+  private final DriveBaseSubsystem m_driveSubsystem = new DriveBaseSubsystem();
+>>>>>>> Stashed changes
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -28,7 +42,17 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+    m_driveSubsystem.setDefaultCommand(
+        m_driveSubsystem.run(
+            () -> m_driveSubsystem.arcade(
+                -m_driverController.getLeftY(), 
+                -m_driverController.getRightX()
+            )
+        )
+    );
     configureBindings();
+ 
+    
   }
 
   /**
