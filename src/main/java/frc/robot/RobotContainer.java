@@ -5,6 +5,10 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+//import frc.robot.commands.Autos;
+//import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -27,6 +31,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   // private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   // private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final DriveBaseSubsystem m_driveSubsystem = new DriveBaseSubsystem();
@@ -64,6 +70,8 @@ public class RobotContainer {
     // Schedule `intakeMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     
+    m_driverController.b().whileTrue(m_intakeSubsystem.IntakeMethodCommand());
+    m_driverController.a().whileTrue(m_shooterSubsystem.shooterMethodCommand());
     // m_driverController.b().whileTrue(m_intakeSubsystem.IntakeMethodCommand);
   }
 
