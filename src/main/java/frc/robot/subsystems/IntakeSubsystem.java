@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IntakeConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
   public final SparkMax intakeMotor;
@@ -18,8 +19,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
   /** Creates a new ExampleSubsystem. */
   public IntakeSubsystem() {
-    intakeMotor = new SparkMax(13, MotorType.kBrushless);
-    ballSensor = new DigitalInput(0);
+    intakeMotor = new SparkMax(IntakeConstants.kIntakeMotorID, MotorType.kBrushless);
+    ballSensor = new DigitalInput(IntakeConstants.kBallChannel);
   }
 
   public void intakeSpeed(double speed) {
@@ -27,7 +28,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void stopIntake() {
-    intakeMotor.set(0);
+    intakeMotor.set(IntakeConstants.kspeed);
   }
 
   public boolean hasBall() {
@@ -41,11 +42,11 @@ public class IntakeSubsystem extends SubsystemBase {
   public Command IntakeMethodCommand() {
     // Inline construction of command goes here.
     // Subsystem::RunOnce implicitly requires `this` subsystem.
-    return Commands.startEnd(() -> intakeSpeed(0.8), () -> stopIntake());
+    return Commands.startEnd(() -> intakeSpeed(IntakeConstants.kIntakespeed), () -> stopIntake());
   }
 
   public Command intakeUntilBall() {
-    return Commands.run(() -> intakeSpeed(0.8))
+    return Commands.run(() -> intakeSpeed(IntakeConstants.kIntakespeed))
         .until(this::hasBall)
         .finallyDo(interrupter -> stopIntake());
   }
