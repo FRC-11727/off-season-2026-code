@@ -14,22 +14,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
-  private static final double TARGET_SHOOT_RPM = 4500.0;
+  private static final double TARGET_SHOOT_RPM = ShooterConstants. kTARGET_SHOOT_RPM;
 
   private final SparkClosedLoopController closedLoopController;
-  private static final double IDLE_SPEED = 0.0;
+  private static final double IDLE_SPEED = ShooterConstants.kIDLE_SPEED;
   private final SparkMax shooterMotor;
 
   public ShooterSubsystem() {
-    shooterMotor = new SparkMax(20, MotorType.kBrushless);
+    shooterMotor = new SparkMax(ShooterConstants.kShooterMotorID, MotorType.kBrushless);
 
     closedLoopController = shooterMotor.getClosedLoopController();
 
     SparkMaxConfig config = new SparkMaxConfig();
-    config.closedLoop.pid(0.01, 0, 0.001);
+    config.closedLoop.pid(ShooterConstants.kp,ShooterConstants.ki, ShooterConstants.kd);
 
     shooterMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }

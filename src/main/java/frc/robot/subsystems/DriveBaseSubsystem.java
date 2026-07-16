@@ -12,6 +12,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DriveConstants;
 
 public class DriveBaseSubsystem extends SubsystemBase {
   private SparkMax motortopleft = null;
@@ -21,10 +22,10 @@ public class DriveBaseSubsystem extends SubsystemBase {
   private DifferentialDrive drive;
 
   public DriveBaseSubsystem() {
-    motortopleft = new SparkMax(1, MotorType.kBrushless);
-    motortopright = new SparkMax(2, MotorType.kBrushless);
-    motorbottomleft = new SparkMax(3, MotorType.kBrushless);
-    motorbottomright = new SparkMax(4, MotorType.kBrushless);
+    motortopleft = new SparkMax(DriveConstants.kMotorTL1, MotorType.kBrushless);
+    motortopright = new SparkMax(DriveConstants.kMotorTR2, MotorType.kBrushless);
+    motorbottomleft = new SparkMax(DriveConstants.kMotorBL3, MotorType.kBrushless);
+    motorbottomright = new SparkMax(DriveConstants.kMotorBR4, MotorType.kBrushless);
 
     this.drive = null;
     SparkMaxConfig motortopleftconfig = new SparkMaxConfig();
@@ -32,10 +33,10 @@ public class DriveBaseSubsystem extends SubsystemBase {
     SparkMaxConfig motorbottomleftconfig = new SparkMaxConfig();
     SparkMaxConfig motorbottomrightconfig = new SparkMaxConfig();
 
-    motorbottomleftconfig.smartCurrentLimit(40);
-    motortopleftconfig.smartCurrentLimit(40);
-    motorbottomrightconfig.smartCurrentLimit(40);
-    motorbottomleftconfig.smartCurrentLimit(40);
+    motorbottomleftconfig.smartCurrentLimit(DriveConstants.kstall);
+    motortopleftconfig.smartCurrentLimit(DriveConstants.kstall);
+    motorbottomrightconfig.smartCurrentLimit(DriveConstants.kstall);
+    motorbottomleftconfig.smartCurrentLimit(DriveConstants.kstall);
 
     motortopleftconfig.inverted(false);
     motortoprightconfig.inverted(true);
