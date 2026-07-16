@@ -1,8 +1,4 @@
 package config;
 
-/**
- * closedLoop
- */
-public class closedLoop {
-
-}
+/** closedLoop */
+public class closedLoop {}

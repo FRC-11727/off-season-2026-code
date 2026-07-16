@@ -4,9 +4,8 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-
+import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -21,43 +20,35 @@ public class IntakeSubsystem extends SubsystemBase {
   public IntakeSubsystem() {
     intakeMotor = new SparkMax(13, MotorType.kBrushless);
     ballSensor = new DigitalInput(0);
-   
   }
 
   public void intakeSpeed(double speed) {
-        intakeMotor.set(speed);
-    }
+    intakeMotor.set(speed);
+  }
 
-    public void stopIntake() {
-        intakeMotor.set(0);
-    }
+  public void stopIntake() {
+    intakeMotor.set(0);
+  }
 
-    public boolean hasBall() {
-        return ballSensor.get();
-    }
+  public boolean hasBall() {
+    return ballSensor.get();
+  }
   /**
    * Example command factory method.
-   
+   *
    * @return a command
    */
   public Command IntakeMethodCommand() {
     // Inline construction of command goes here.
     // Subsystem::RunOnce implicitly requires `this` subsystem.
-    return Commands.startEnd(
-        () -> intakeSpeed(0.8),
-        () -> stopIntake()
-        );
-    
- }
+    return Commands.startEnd(() -> intakeSpeed(0.8), () -> stopIntake());
+  }
 
- public Command intakeUntilBall() {
-    return Commands.run(
-        () -> intakeSpeed(0.8)
-
-    )
-    .until(this::hasBall)
-    .finallyDo(interrupter -> stopIntake());
- }
+  public Command intakeUntilBall() {
+    return Commands.run(() -> intakeSpeed(0.8))
+        .until(this::hasBall)
+        .finallyDo(interrupter -> stopIntake());
+  }
 
   /**
    * An example method querying a boolean state of the subsystem (for example, a digital sensor).
