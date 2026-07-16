@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.DriveBaseSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -50,8 +51,10 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight joysticks}.
    */
   private void configureBindings() {
-    m_driveSubsystem.setDefaultCommand(m_driveSubsystem.run(() ->
-        m_driveSubsystem.arcade(-m_driverController.getLeftY(), m_driverController.getRightX())));
+    m_driveSubsystem.setDefaultCommand(new DriveCommands(
+        m_driveSubsystem,
+        () -> -m_driverController.getLeftY(),
+        () -> m_driverController.getRightX()));
     // Schedule `intakeMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
 
