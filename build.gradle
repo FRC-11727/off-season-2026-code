@@ -1,6 +1,36 @@
 plugins {
     id "java"
     id "edu.wpi.first.GradleRIO" version "2026.2.1"
+    id "com.diffplug.spotless" version "8.1.0"
+}
+
+spotless {
+  // settings to follow for .java files
+  java {
+    // defines how imports should be ordered after running the formatter
+    importOrder("\\#", "java|javax", "com|org", "edu.wpi.first", "frc.robot")
+    removeUnusedImports() // removes unnecessary imports
+    cleanthat() // cleans anything that went wrong
+    palantirJavaFormat().style("GOOGLE").formatJavadoc(true) // defining our formatting style
+    formatAnnotations() // executes all the formatting as defined as above
+  }
+  // different than the norm, it uses groovy settings to target all gradle files
+  groovy {
+    target "**/*.gradle" // makes it target gradle files
+    removeSemicolons() // takes out semicolons (unnecessary in gradle files)
+    greclipse().configProperties("""
+    org.eclipse.jdt.core.formatter.tabulation.char=space
+    org.eclipse.jdt.core.formatter.tabulation.size=2
+    """) // some settings about having two spaces indentation
+  }
+  json {
+    target "**/*.json"
+    gson().indentWithSpaces(2) // googles json formatter, with a special setting of 2 spaces indentation
+  } 
+  yaml {
+    target "**/*.yaml", "**/*.yml"
+    jackson() // a formatter made for yaml files
+  }
 }
 
 java {
