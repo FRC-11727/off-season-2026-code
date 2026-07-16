@@ -12,27 +12,47 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
+import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.config.SparkMaxConfig;
+
+
 public class ShooterSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
-  private static final double SHOOT_SPEED = 1.0;
+  private static final double TARGET_SHOOT_RPM = 4500.0;
+  private final SparkClosedLoopController closedLoopController;
   private static final double IDLE_SPEED = 0.0;
   private final SparkMax shooterMotor;
   public ShooterSubsystem() {
     shooterMotor = new SparkMax(20, MotorType.kBrushless);
+
+    closedLoopController = shooterMotor.getClosedLoopController();
+
+    SparkMaxConfig config = new SparkMaxConfig();
+    config.closedLoop
+        .pid(0.01, 0, 0.001);
+
+  
+    shooterMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+}
     
 
 
+
+public void setShooterSpeed(double targetRPM) {
+    closedLoopController.setSetpoint(targetRPM, com.revrobotics.spark.SparkBase.ControlType.kVelocity);
   }
-  public void setShooterSpeed(double speed) {
-    shooterMotor.set(speed);
-  }
-  public void stopShooterSpeed(){
+ 
+    public void stopShooterSpeed(){
     setShooterSpeed(IDLE_SPEED);
   }
 
-  public boolean isAtSpeed() {
-    return shooterMotor.get() >= SHOOT_SPEED -0.05;
-  }
+public boolean isAtSpeed() {
+  double currentRPM = shooterMotor.getEncoder().getVelocity();
+  return Math.abs(currentRPM - TARGET_SHOOT_RPM) <= 150.0; 
+}
   /**
    * Example command factory method.
    *
@@ -42,7 +62,7 @@ public class ShooterSubsystem extends SubsystemBase {
     // Inline construction of command goes here.
     // Subsystem::RunOnce implicitly requires `this` subsystem.
     return Commands.startEnd(
-      () -> setShooterSpeed(SHOOT_SPEED),
+      () -> setShooterSpeed(TARGET_SHOOT_RPM),
       () -> stopShooterSpeed()
 
     );

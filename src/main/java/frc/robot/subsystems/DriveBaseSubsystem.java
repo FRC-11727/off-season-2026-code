@@ -23,16 +23,18 @@ public class DriveBaseSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   public DriveBaseSubsystem(DifferentialDrive drive) {
     this.drive = null;
-    motortopleft = new SparkMax(1, MotorType.kBrushless);
-    motortopright = new SparkMax(2, MotorType.kBrushless);
-    motorbottomleft = new SparkMax(3, MotorType.kBrushless);
-    motorbottomright = new SparkMax(4, MotorType.kBrushless);
 
 
     
   }
 
   public DriveBaseSubsystem(){
+        motortopleft = new SparkMax(1, MotorType.kBrushless);
+    motortopright = new SparkMax(2, MotorType.kBrushless);
+    motorbottomleft = new SparkMax(3, MotorType.kBrushless);
+    motorbottomright = new SparkMax(4, MotorType.kBrushless);
+
+
     this.drive = null;
     SparkMaxConfig motortopleftconfig = new SparkMaxConfig();
     SparkMaxConfig motortoprightconfig = new SparkMaxConfig();
