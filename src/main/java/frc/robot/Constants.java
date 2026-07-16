@@ -33,7 +33,7 @@ public final class Constants {
     public static final double kIntakespeed = 0.8;
   }
 
-  public static class DriveConstants{
+  public static class DriveConstants {
     public static final int kMotorTL1 = 1;
     public static final int kMotorTR2 = 2;
     public static final int kMotorBL3 = 3;
@@ -41,6 +41,3 @@ public final class Constants {
     public static final int kstall = 40;
   }
 }
-
-
-

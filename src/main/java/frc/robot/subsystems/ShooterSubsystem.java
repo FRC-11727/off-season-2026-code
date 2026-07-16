@@ -15,10 +15,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
+import java.util.function.DoubleSupplier;
 
 public class ShooterSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
-  private static final double TARGET_SHOOT_RPM = ShooterConstants. kTARGET_SHOOT_RPM;
+  private static final double TARGET_SHOOT_RPM = ShooterConstants.kTARGET_SHOOT_RPM;
 
   private final SparkClosedLoopController closedLoopController;
   private static final double IDLE_SPEED = ShooterConstants.kIDLE_SPEED;
@@ -30,7 +31,7 @@ public class ShooterSubsystem extends SubsystemBase {
     closedLoopController = shooterMotor.getClosedLoopController();
 
     SparkMaxConfig config = new SparkMaxConfig();
-    config.closedLoop.pid(ShooterConstants.kp,ShooterConstants.ki, ShooterConstants.kd);
+    config.closedLoop.pid(ShooterConstants.kp, ShooterConstants.ki, ShooterConstants.kd);
 
     shooterMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
@@ -79,5 +80,10 @@ public class ShooterSubsystem extends SubsystemBase {
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
+  }
+
+  public void setShooterSpeed(DoubleSupplier m_spinSupplier) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'setShooterSpeed'");
   }
 }

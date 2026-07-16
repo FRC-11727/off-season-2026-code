@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
+import java.util.function.DoubleSupplier;
 
 public class DriveBaseSubsystem extends SubsystemBase {
   private SparkMax motortopleft = null;
@@ -56,8 +57,8 @@ public class DriveBaseSubsystem extends SubsystemBase {
     drive = new DifferentialDrive(motortopleft::set, motortopright::set);
   }
 
-  public void arcade(double speed, double rotation) {
-    drive.arcadeDrive(speed, rotation);
+  public void arcade(double m_speedSupplier, double m_rotationSupplier) {
+    drive.arcadeDrive(m_speedSupplier, m_rotationSupplier);
   }
 
   public void stop() {
@@ -99,5 +100,10 @@ public class DriveBaseSubsystem extends SubsystemBase {
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
+  }
+
+  public void arcade(DoubleSupplier m_speedSupplier, DoubleSupplier m_rotationSupplier) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'arcade'");
   }
 }
