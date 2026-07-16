@@ -4,7 +4,8 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.spark.SparkBase;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
@@ -18,10 +19,6 @@ public class DriveBaseSubsystem extends SubsystemBase {
   private SparkMax motorbottomleft = null;
   private SparkMax motorbottomright = null;
   private DifferentialDrive drive;
-  /** Creates a new ExampleSubsystem. */
-  public DriveBaseSubsystem(DifferentialDrive drive) {
-    this.drive = null;
-  }
 
   public DriveBaseSubsystem() {
     motortopleft = new SparkMax(1, MotorType.kBrushless);
@@ -47,21 +44,13 @@ public class DriveBaseSubsystem extends SubsystemBase {
     motorbottomrightconfig.follow(motortopright, true);
 
     motorbottomleft.configure(
-        motorbottomleftconfig,
-        SparkBase.ResetMode.kResetSafeParameters,
-        SparkBase.PersistMode.kPersistParameters);
+        motorbottomleftconfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     motortopleft.configure(
-        motortopleftconfig,
-        SparkBase.ResetMode.kResetSafeParameters,
-        SparkBase.PersistMode.kPersistParameters);
+        motortopleftconfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     motorbottomright.configure(
-        motorbottomrightconfig,
-        SparkBase.ResetMode.kResetSafeParameters,
-        SparkBase.PersistMode.kPersistParameters);
+        motorbottomrightconfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     motortopright.configure(
-        motortoprightconfig,
-        SparkBase.ResetMode.kResetSafeParameters,
-        SparkBase.PersistMode.kPersistParameters);
+        motortoprightconfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     drive = new DifferentialDrive(motortopleft::set, motortopright::set);
   }
