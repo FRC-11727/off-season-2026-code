@@ -10,6 +10,10 @@ import frc.robot.subsystems.DriveBaseSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
+// new command: rotateToAngle you rotate to a specific angle (45 degrees)
+// it uses a PID
+// it should be considered finished once you are within some angle
+
 public final class Autos {
   /** Example static factory for an autonomous command. */
   public static Command moveForwardAndShoot(DriveBaseSubsystem driveBaseSubsystem, ShooterSubsystem shooterSubsystem) {
@@ -23,6 +27,13 @@ public final class Autos {
   );
   }
 
+  /**
+   * Creates a move back and shoot auto 
+   * @param intakeSubsystem the current intake
+   * @param driveBaseSubsystem the current drivebase
+   * @param shooterSubsystem the shooter 
+   * @return A command sequence with the auto
+   */
   public static Command moveBackIntakeAndShoot(
       IntakeSubsystem intakeSubsystem,
       DriveBaseSubsystem driveBaseSubsystem, 

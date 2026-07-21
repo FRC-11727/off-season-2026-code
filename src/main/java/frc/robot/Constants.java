@@ -25,6 +25,13 @@ public final class Constants {
     public static final double ki = 0;
     public static final double kd = 0.001;
   }
+  public static class RTAConstants {
+    public static final double kp2 = 0.03;
+    public static final double ki2 = 0;
+    public static final double kd2 = 0.002;
+    public static final double kAngleToleranceDeg = 2.0;
+    public static final double kMaxOutput = 0.6;
+  }
 
   public static class IntakeConstants {
     public static final int kIntakeMotorID = 13;
