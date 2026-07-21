@@ -39,5 +39,6 @@ public final class Constants {
     public static final int kMotorBL3 = 3;
     public static final int kMotorBR4 = 4;
     public static final int kstall = 40;
+    public static final int kPigeonCANID = 67;
   }
 }

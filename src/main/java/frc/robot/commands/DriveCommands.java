@@ -36,7 +36,7 @@ public class DriveCommands extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_DriveBaseSubsystem.arcade(m_speedSupplier, m_rotationSupplier);
+    m_DriveBaseSubsystem.arcade(m_speedSupplier.getAsDouble(), m_rotationSupplier.getAsDouble());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
