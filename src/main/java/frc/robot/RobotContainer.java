@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -14,6 +15,12 @@ import frc.robot.subsystems.DriveBaseSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TelemetryManager;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+// create SendableChooser that allows you to pick what auto to run:
+// Autos.moveForwardAndShoot, Commands.none
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -33,6 +40,7 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final SendableChooser<Command> m_chooser = new SendableChooser<Command>();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -78,4 +86,14 @@ public class RobotContainer {
     double currentRPM = m_intakeSubsystem.intakeMotor.getEncoder().getVelocity();
     Telemetry.telemeterizeIntake(currentSpeed, currentRPM);
   }
+  m_chooser.setDefaultOption("Do Nothing", Commands.none());
+
+    // Add other autonomous command options here
+  m_chooser.addOption("Drive Forward", m_driveBaseSubsystem.run(() -> m_driveBaseSubsystem.arcade(0.5, 0)).withTimeout(2));
+  m_chooser.addOption("Drive Backward", m_driveBaseSubsystem.run(() -> m_driveBaseSubsystem.arcade(-0.5, 0)).withTimeout(2));
+
+    
+  SmartDashboard.putData("Auto Mode", m_chooser);
+
+  configureButtonBindings();
 }
