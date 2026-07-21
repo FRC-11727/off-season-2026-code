@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Autos;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.DriveBaseSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -47,6 +48,12 @@ public class RobotContainer {
     // Configure the trigger bindings
 
     configureBindings();
+    m_chooser.setDefaultOption("Do Nothing", Commands.none());
+    m_chooser.addOption("Move Forward and Shoot", Autos.moveForwardAndShoot(m_driveSubsystem, m_shooterSubsystem));
+
+    m_chooser.addOption("Drive Forward", m_driveSubsystem.run(() -> m_driveSubsystem.arcade(0.5, 0)).withTimeout(2));
+    m_chooser.addOption("Drive Backward", m_driveSubsystem.run(() -> m_driveSubsystem.arcade(-0.5, 0)).withTimeout(2));
+    SmartDashboard.putData("Auto Mode", m_chooser);
   }
 
   /**
@@ -78,7 +85,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand1() {
     // An example command will be run in autonomous
-    return Commands.none();
+    return m_chooser.getSelected();
   }
 
   public void periodic() {
@@ -86,14 +93,13 @@ public class RobotContainer {
     double currentRPM = m_intakeSubsystem.intakeMotor.getEncoder().getVelocity();
     Telemetry.telemeterizeIntake(currentSpeed, currentRPM);
   }
-  m_chooser.setDefaultOption("Do Nothing", Commands.none());
+    
 
     // Add other autonomous command options here
-  m_chooser.addOption("Drive Forward", m_driveBaseSubsystem.run(() -> m_driveBaseSubsystem.arcade(0.5, 0)).withTimeout(2));
-  m_chooser.addOption("Drive Backward", m_driveBaseSubsystem.run(() -> m_driveBaseSubsystem.arcade(-0.5, 0)).withTimeout(2));
+ 
 
     
-  SmartDashboard.putData("Auto Mode", m_chooser);
+  
 
-  configureButtonBindings();
+
 }

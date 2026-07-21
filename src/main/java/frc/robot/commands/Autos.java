@@ -11,7 +11,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public final class Autos {
   /** Example static factory for an autonomous command. */
-  public static Command moveForwardAndShoot(ShooterSubsystem shooterSubsystem, DriveBaseSubsystem driveBaseSubsystem) {
+  public static Command moveForwardAndShoot(DriveBaseSubsystem driveBaseSubsystem, ShooterSubsystem shooterSubsystem) {
     return Commands.sequence(
       new DriveCommands(driveBaseSubsystem, () -> -1, () -> 0),
       Commands.waitSeconds(2),
